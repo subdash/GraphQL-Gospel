@@ -1,20 +1,7 @@
 import { AugmentedRequest, RESTDataSource } from '@apollo/datasource-rest';
+import { Gospel, GospelResponse } from './generated/graphql';
 
 const BASE_URL = 'https://api.esv.org';
-
-
-type Gospel =
-| 'Matthew'
-| 'Mark'
-| 'Luke'
-| 'John'
-;
-
-interface BibleApiResponse {
-    query: string;
-    canonical: string;
-    passages: string[];
-}
 
 class GospelAPI extends RESTDataSource {
     override baseURL = BASE_URL;
@@ -22,9 +9,9 @@ class GospelAPI extends RESTDataSource {
     async getSingleVerse(book: Gospel,
                          chapter: number,
                          verse: number
-    ): Promise<BibleApiResponse> {
+    ): Promise<GospelResponse> {
         const passageEndpoint = '/v3/passage/text/';
-        const { query, canonical, passages } = await this.get<BibleApiResponse>(passageEndpoint, {
+        const { query, canonical, passages } = await this.get<GospelResponse>(passageEndpoint, {
             params: { q: `${book}+${chapter}:${verse}` }
         });
         return {

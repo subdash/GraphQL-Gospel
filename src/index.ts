@@ -1,39 +1,32 @@
 import { ApolloServer } from '@apollo/server';
 import { startStandaloneServer } from '@apollo/server/standalone';
+import { readFileSync } from 'fs';
+import { Resolvers } from './generated/graphql';
+
+
 import dotenv from 'dotenv';
 
 import GospelAPI from './api';
 
 dotenv.config({ path: `${process.env.NODE_PATH}/src/.env` });
 
-const typeDefs = `#graphql
-type Gospel {
-    query: String!
-    canonical: String!
-    passages: [String!]!
+export interface Context {
+    dataSources: {
+        gospelAPI: GospelAPI
+    }
 }
 
-type Query {
-    gospel(by: GospelInput!): Gospel
-}
-
-input GospelInput {
-    book: String!
-    chapter: Int!
-    verse: Int!
-}
-`;
-const resolvers = {
+const typeDefs = readFileSync('src/schema.graphql', { encoding: 'utf-8' });
+const resolvers: Resolvers = {
     Query: {
         gospel: async (_, { by: { book, chapter, verse } }, { dataSources }) => {
-            const { query, canonical, passages } = await dataSources.gospelApi.getSingleVerse(
-                book, chapter, verse
-            );
+            const { gospelAPI: api } = dataSources;
+            const { query, canonical, passages } = await api.getSingleVerse(book, chapter, verse);
             return { query, canonical, passages };
         }
     }
 };
-const server = new ApolloServer({
+const server = new ApolloServer<Context>({
     typeDefs,
     resolvers
 });
@@ -43,7 +36,7 @@ const { url } = await startStandaloneServer(server, {
         const { cache } = server;
         return {
             dataSources: {
-                gospelApi: new GospelAPI({ cache })
+                gospelAPI: new GospelAPI({ cache }),
             }
         }
     }

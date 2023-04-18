@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "compile": "tsc",
-    "start": "NODE_PATH=. node --es-module-specifier-resolution=node ./dist/index.js"
+    "start": "NODE_PATH=. node --es-module-specifier-resolution=node ./dist/index.js",
+    "generate": "NODE_PATH=. graphql-codegen --config codegen.ts"
   },
   "keywords": [],
   "author": "",
@@ -18,7 +19,11 @@
     "graphql": "^16.6.0"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "3.3.0",
+    "@graphql-codegen/typescript": "3.0.3",
+    "@graphql-codegen/typescript-resolvers": "3.2.0",
     "@types/node": "^18.15.11",
-    "typescript": "^5.0.4"
+    "typescript": "^5.0.4",
+    "@graphql-codegen/introspection": "3.0.1"
   }
 }

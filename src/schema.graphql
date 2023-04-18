@@ -1,0 +1,22 @@
+type GospelResponse {
+    query: String!
+    canonical: String!
+    passages: [String!]!
+}
+
+type Query {
+    gospel(by: GospelInput!): GospelResponse
+}
+
+enum Gospel {
+    MATTHEW
+    MARK
+    LUKE
+    JOHN
+}
+
+input GospelInput {
+    book: Gospel!
+    chapter: Int!
+    verse: Int!
+}
