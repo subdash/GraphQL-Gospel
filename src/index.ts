@@ -39,10 +39,13 @@ const server = new ApolloServer({
 });
 const { url } = await startStandaloneServer(server, {
     listen: { port: 4000 },
-    context: async ({ req, res }) => ({
-        dataSources: {
-            gospelApi: new GospelAPI()
+    context: async ({ req, res }) => {
+        const { cache } = server;
+        return {
+            dataSources: {
+                gospelApi: new GospelAPI({ cache })
+            }
         }
-    })
+    }
 });
 console.log('Server ready at: ', url);
