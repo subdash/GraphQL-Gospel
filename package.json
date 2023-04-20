@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "format": "eslint . --ext .ts --fix && prettier --config .prettierrc 'src/**/*.ts' --write",
     "compile": "tsc",
     "start": "NODE_PATH=. node --es-module-specifier-resolution=node ./dist/index.js",
     "generate": "NODE_PATH=. graphql-codegen --config codegen.ts"
@@ -20,10 +21,16 @@
   },
   "devDependencies": {
     "@graphql-codegen/cli": "3.3.0",
+    "@graphql-codegen/introspection": "3.0.1",
     "@graphql-codegen/typescript": "3.0.3",
     "@graphql-codegen/typescript-resolvers": "3.2.0",
     "@types/node": "^18.15.11",
-    "typescript": "^5.0.4",
-    "@graphql-codegen/introspection": "3.0.1"
+    "@typescript-eslint/eslint-plugin": "^5.59.0",
+    "@typescript-eslint/parser": "^5.59.0",
+    "eslint": "^8.38.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "prettier": "^2.8.7",
+    "typescript": "^5.0.4"
   }
 }
