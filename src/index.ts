@@ -22,10 +22,15 @@ const typeDefs = readFileSync('src/schema.graphql', { encoding: 'utf-8' });
 
 const resolvers: Resolvers = {
   Query: {
-    gospel: async (_, { by: { book, chapter, verse } }, { dataSources }) => {
+    passage: async (_, { by: { book, chapter, verse } }, { dataSources }) => {
       const { gospelAPI: api } = dataSources;
-      const { query, canonical, passages } = await api.getSingleVerse(book, chapter, verse);
-      return { query, canonical, passages };
+      const { canonical, passages } = await api.getVerse(book, chapter, verse);
+      return { canonical, passages };
+    },
+    wordCount: async (_, { by: { book, chapter, verse } }, { dataSources }) => {
+      const { gospelAPI: api } = dataSources;
+      const { words } = await api.getVerseWordMap(book, chapter, verse);
+      return { words };
     }
   }
 };

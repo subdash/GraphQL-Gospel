@@ -4,8 +4,23 @@ type GospelResponse {
     passages: [String!]!
 }
 
+type PassageResponse {
+    canonical: String!
+    passages: [String!]!
+}
+
+type WordMapResponse {
+    words: [WordCount!]!
+}
+
+type WordCount {
+    word: String!
+    count: Int!
+}
+
 type Query {
-    gospel(by: GospelInput!): GospelResponse
+    passage(by: GospelInput!): PassageResponse
+    wordCount(by: GospelInput!): WordMapResponse
 }
 
 enum Gospel {

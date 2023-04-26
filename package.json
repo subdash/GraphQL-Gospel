@@ -6,7 +6,7 @@
   "scripts": {
     "format": "eslint . --ext .ts --fix && prettier --config .prettierrc 'src/**/*.ts' --write",
     "compile": "tsc",
-    "start": "NODE_PATH=. node --es-module-specifier-resolution=node ./dist/index.js",
+    "start": "NODE_PATH=. node --es-module-specifier-resolution=node ./dist/src/index.js",
     "generate": "NODE_PATH=. graphql-codegen --config codegen.ts"
   },
   "keywords": [],
@@ -17,7 +17,8 @@
     "@apollo/datasource-rest": "^5.0.2",
     "@apollo/server": "^4.6.0",
     "dotenv": "^16.0.3",
-    "graphql": "^16.6.0"
+    "graphql": "^16.6.0",
+    "sqlite3": "^5.1.6"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "3.3.0",
